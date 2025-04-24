@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Sentiment Visualizer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-project-diagram"></i>
+                <h1>Social Media Sentiment Visualizer</h1>
+            </div>
+            <div class="header-controls">
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="Search for topics, hashtags...">
+                    <button id="search-button"><i class="fas fa-search"></i> Analyze</button>
+                </div>
+                <div class="time-range">
+                    <select id="time-range-select">
+                        <option value="7">Last 7 days</option>
+                        <option value="30" selected>Last 30 days</option>
+                        <option value="90">Last 3 months</option>
+                    </select>
+                </div>
+                <button id="reset-button" class="reset-btn"><i class="fas fa-sync-alt"></i> Reset</button>
+                <button id="theme-toggle" class="theme-toggle"><i class="fas fa-moon"></i> Toggle Theme</button>
+            </div>
+        </header>
+
+        <div class="trending-topics">
+            <h2>Trending Topics (Last 30 Days)</h2>
+            <div class="topic-tags" id="trending-tags">
+                <!-- Dynamically loaded -->
+            </div>
+        </div>
+
+        <div class="platform-filters">
+            <div class="platform-filter active" data-platform="all">
+                <i class="fas fa-globe"></i> All Platforms
+            </div>
+            <div class="platform-filter" data-platform="twitter">
+                <i class="fab fa-twitter twitter"></i> Twitter
+            </div>
+            <div class="platform-filter" data-platform="facebook">
+                <i class="fab fa-facebook-f facebook"></i> Facebook
+            </div>
+            <div class="platform-filter" data-platform="instagram">
+                <i class="fab fa-instagram instagram"></i> Instagram
+            </div>
+            <div class="platform-filter" data-platform="linkedin">
+                <i class="fab fa-linkedin-in linkedin"></i> LinkedIn
+            </div>
+        </div>
+
+        <div class="dashboard">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Sentiment Distribution</h3>
+                    <div class="time-info" id="sentiment-time-info">
+                        Last 30 days
+                    </div>
+                </div>
+                <div class="sentiment-stats">
+                    <div class="stat positive">
+                        <div class="stat-value">0%</div>
+                        <div class="stat-label">Positive</div>
+                    </div>
+                    <div class="stat negative">
+                        <div class="stat-value">0%</div>
+                        <div class="stat-label">Negative</div>
+                    </div>
+                    <div class="stat neutral">
+                        <div class="stat-value">0%</div>
+                        <div class="stat-label">Neutral</div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="sentimentChart"></canvas>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>Platform Distribution</h3>
+                    <div class="time-info" id="platform-time-info">
+                        Last 30 days
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="platformChart"></canvas>
+                </div>
+            </div>
+
+            <div class="card full-width">
+                <div class="card-header">
+                    <h3>Recent Posts</h3>
+                    <div class="post-count" id="post-count">
+                        0 posts found
+                    </div>
+                </div>
+                <div class="posts-container" id="posts-container">
+                    <!-- Posts will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
